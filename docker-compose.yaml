@@ -1,9 +1,26 @@
 version: '3.1'
+
 services:
   web:
-    build: .
+    image: "kushalsubedi/test-repo:latest"
     ports:
       - "8000:8000"
+    depends_on:
+      - db
+      - redis
   redis:
     image: "redis:alpine"
+  db:
+    image: "postgres"
+    environment:
+      POSTGRES_USER: "kushal"
+      POSTGRES_PASSWORD: "kushal"
+      POSTGRES_DB: "default_database"
+    ports:
+      - "5434:5432"  
+    volumes:
+      - dbdata:/var/lib/postgresql/data
+
+volumes:
+  dbdata:
 
